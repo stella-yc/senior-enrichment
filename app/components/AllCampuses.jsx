@@ -36,7 +36,7 @@ const AllCampuses = (props) => {
 };
 
 
-/*** AllCampuses React-Redux */
+/*** AllCampuses Container React-Redux */
 const mapStateToProps = (state) => {
   return state;
 }

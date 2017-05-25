@@ -20,11 +20,15 @@ const campuses = [
 const singleCampus =
   { name: 'Mars', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Mars_Hubble.jpg' };
 
+const students = [
+  {id: 1, name: 'Azula', campus: 'Mars'},
+  {id: 2, name: 'Louie', campus: 'Terra'}
+];
 
 // Initial State assigned dummy data values
 const initialState = {
   allCampuses: campuses,
-  allStudents: [],
+  allStudents: students,
   selectedCampus: singleCampus,
   selectedStudent: {}
 }
