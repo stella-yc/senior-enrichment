@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import store from '../store';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 /** CampusIcon Presentational Component***/
 const CampusIcon = (props) => {
   let name = props.name;
-  let imageUrl = props.imageUrl;
+  let imageURL = props.imageURL;
   return (
     <div>
       <h3>{name}</h3>
-      <img src={imageUrl}/>
+      <Link to={`/campus/${name}`}><img src={imageURL}/></Link>
     </div>
   );
 };
@@ -24,13 +25,14 @@ const AllCampuses = (props) => {
         props.allCampuses.map(campus => {
           return (
             <CampusIcon
+              key={campus.name}
               name={campus.name}
-              imageUrl={campus.imageUrl}
+              imageURL={campus.imageURL}
             />
           );
         })
       }
-
+      <Link to="/newCampus"><h2>Add a new campus!</h2></Link>
     </div>
   );
 };

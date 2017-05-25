@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { ALL_CAMPUSES, ALL_STUDENTS, ADD_CAMPUS } from '../action-creators';
 
 // This is a rough outline of the structure of the store and
 // what info we want on store
@@ -27,8 +28,8 @@ const students = [
 
 // Initial State assigned dummy data values
 const initialState = {
-  allCampuses: campuses,
-  allStudents: students,
+  allCampuses: [],
+  allStudents: [],
   selectedCampus: singleCampus,
   selectedStudent: {}
 }
@@ -36,9 +37,20 @@ const initialState = {
 
 // Root Reducer!
 const rootReducer = function(state = initialState, action) {
+  const newState = Object.assign({}, state);
   switch (action.type) {
+    case ALL_CAMPUSES:
+      newState.allCampuses = action.allCampuses;
+      break;
+    case ALL_STUDENTS:
+      newState.allStudents = action.allStudents;
+      break;
+    case ADD_CAMPUS:
+      newState.allCampuses.push(action.newCampus);
+      break;
     default: return state;
   }
+  return newState;
 };
 
 export default rootReducer;

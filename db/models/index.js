@@ -8,5 +8,5 @@ var Sequelize = require('sequelize');
 
 const User = require('./user');
 const Campus = require('./campus');
-Campus.hasMany(User);
+User.belongsTo(Campus, { as: 'HomeCampus'});
 module.exports = {User, Campus};
