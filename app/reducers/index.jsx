@@ -1,5 +1,11 @@
 import { combineReducers } from 'redux';
-import { ALL_CAMPUSES, ALL_STUDENTS, ADD_CAMPUS } from '../action-creators';
+import { ALL_CAMPUSES,
+        ALL_STUDENTS,
+        ADD_CAMPUS,
+        ADD_STUDENT,
+        SELECT_STUDENT,
+        DELETE_STUDENT
+      } from '../action-creators';
 
 // This is a rough outline of the structure of the store and
 // what info we want on store
@@ -48,6 +54,25 @@ const rootReducer = function(state = initialState, action) {
     case ADD_CAMPUS:
       newState.allCampuses.push(action.newCampus);
       break;
+    case ADD_STUDENT: {
+      let newStudent = action.newStudent;
+      let homeCampus = newState.allCampuses.filter(campus =>
+        campus.id === newStudent.HomeCampusId);
+      newStudent.HomeCampus = homeCampus;
+      newState.allStudents.push(newStudent);
+      break;
+    }
+    case SELECT_STUDENT: {
+      newState.selectedStudent = action.selectedStudent;
+      break;
+    }
+    case DELETE_STUDENT: {
+      let oldStudents = newState.allStudents;
+      newState.allStudents = oldStudents.filter(student =>
+        student.id !== action.deletedStudent.id
+      );
+      break;
+    }
     default: return state;
   }
   return newState;

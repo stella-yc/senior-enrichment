@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { addCampus } from '../action-creators';
 
 
+// Form component with local state //
+
 class NewCampusForm extends Component {
   constructor(props) {
     super(props);
@@ -70,8 +72,7 @@ class NewCampusForm extends Component {
   }
 }
 
-
-// export default NewCampusForm;
+// ** Smart Container for NewCampusForm **//
 
 const mapDispatchToProps = (dispatch) => {
   return {

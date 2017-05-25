@@ -57,8 +57,9 @@ api.get('/students/:studentId', (req, res, next) => {
 			{model: Campus, as: 'HomeCampus'},
 		]
 	})
-	.then(campus => {
-		res.send(campus);
+	.then(student => {
+		console.log('**API ROUTE STUDENT', student);
+		res.send(student);
 	})
 	.catch(next);
 });
@@ -74,9 +75,29 @@ api.post('/campuses', (req, res, next) => {
 
 //Add a new student
 api.post('/students', (req, res, next) => {
-	User.create(req.body)
+	console.log('*** req.body', req.body);
+	User.create({
+		name: req.body.name,
+		email: req.body.email,
+		HomeCampusId: +req.body.HomeCampusId
+	})
 	.then(student => {
 		console.log('*** NEW STUDENT', student);
+		res.send(student);
+	})
+	.catch(next);
+});
+
+//Delete a student
+api.delete('/students/:studentId', (req, res, next) => {
+	User.findOne({
+		where: {
+			id: req.params.studentId
+		}
+	})
+	.then(student => {
+		student.destroy();
+		console.log('student supposed to be destroyed');
 		res.send(student);
 	})
 	.catch(next);

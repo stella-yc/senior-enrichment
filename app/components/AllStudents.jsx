@@ -1,23 +1,46 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { removeStudent } from '../action-creators';
+
+const StudentRow = (props) => {
+  const handleDelete = (event) => {
+    props.deleteStudent(props.id);
+    event.preventDefault();
+  };
+  return (
+    <li>
+      <p>
+        {props.id},
+        <Link to={`/student/${props.id}`}>
+        {props.name}
+        </Link>,
+        {props.campus},
+        <button onClick={handleDelete}>X</button>
+      </p>
+    </li>
+  );
+};
+
 
 const AllStudents = (props) => {
   return (
     <div>
       <h1>Space Academy Students</h1>
+      <Link to="/newStudent"><p>Add new student!</p></Link>
+      <h3>Student Directory</h3>
       <p>Student Id, Student Name, Campus</p>
       <ul>
       {
         props.allStudents.map(student => {
           return (
-            <li key={student.id}>
-              <p>
-                {student.id},
-                <Link to={`/student/${student.id}`}>{student.name}</Link>,
-                {student.HomeCampus.name}
-                </p>
-            </li>
+            <StudentRow
+              key={student.id}
+              id={student.id}
+              name={student.name}
+              campus={student.HomeCampus.name}
+              deleteStudent={props.deleteStudent}
+            />
           );
         })
       }
@@ -26,14 +49,17 @@ const AllStudents = (props) => {
   );
 };
 
-
 /*** AllStudents Container React-Redux */
 const mapStateToProps = (state) => {
   return state;
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    deleteStudent (studentId) {
+      dispatch(removeStudent(studentId));
+    }
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllStudents);

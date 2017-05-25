@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-//action types
+//** action types **//
+
 export const ALL_CAMPUSES = 'ALL_CAMPUSES';
 export const ALL_STUDENTS = 'ALL_STUDENTS';
 export const ADD_CAMPUS = 'ADD_CAMPUS';
 export const ADD_STUDENT = 'ADD_STUDENT';
+export const SELECT_STUDENT = 'SELECT_STUDENT';
+export const DELETE_STUDENT = 'DELETE_STUDENT';
 
-//action creators
+//** action creators **//
+
 const loadCampuses = (campuses) => {
   return {
     type: ALL_CAMPUSES,
@@ -35,7 +39,23 @@ const loadNewStudent = (student) => {
   };
 };
 
-// special action creator to work with thunk
+const setStudent = (student) => {
+  return {
+    type: SELECT_STUDENT,
+    selectedStudent: student
+  };
+};
+
+const deleteStudent = (student) => {
+  return {
+    type: DELETE_STUDENT,
+    deletedStudent: student
+  };
+};
+
+// ** ASYNC ACTION CREATORS ** //
+
+
 // -- 1. Axios request to retrieve campuses from db
 // -- 2. dispatch action object return by action creator,
 // --    which will result in updating the store's state
@@ -44,32 +64,29 @@ export const getCampuses = () => {
     axios.get('/api/campuses')
     .then(res => res.data)
     .then(campuses => {
-      console.log('campuses received from route!', campuses);
-      dispatch(loadCampuses(campuses))
+      dispatch(loadCampuses(campuses));
     })
     .catch(console.error);
   };
 };
 
-// special action creator to work with thunk
+
 // to retrieve all students
 export const getStudents = () => {
   return (dispatch) => {
     axios.get('/api/students')
     .then(res => res.data)
     .then(students => {
-      console.log('Students received from route!', students);
       dispatch(loadStudents(students))
     })
     .catch(console.error);
   };
 };
 
-// special action creator to work with thunk
+
 // -- 1. to add new campus via post request to route
 // -- 2. have that campus appear in allCampuses prop of state
-// ----- either add the new campus to the allCampuses array
-// ----- OR execute getCampuses immediately afterwards
+// ----- by adding the new campus to the allCampuses array
 
 export const addCampus = (newCampus) => {
   return (dispatch) => {
@@ -77,6 +94,56 @@ export const addCampus = (newCampus) => {
     .then(res => res.data)
     .then(campus => {
       dispatch(loadNewCampus(campus));
+    })
+    .catch(console.error);
+  };
+};
+
+
+// -- 1. to add new student via post request to route
+// -- 2. have that campus appear in allStudents prop of state
+
+export const addStudent = (newStudent) => {
+  return (dispatch) => {
+    return axios.post('/api/students', newStudent)
+    .then(res => res.data)
+    .then(student => {
+      dispatch(loadNewStudent(student));
+    })
+    .catch(console.error);
+  };
+};
+
+
+// -- 1. get student from db
+// -- 2. update redux store state
+
+export const getStudent = (studentId) => {
+  return (dispatch) => {
+    axios.get(`/api/students/${studentId}`)
+    .then(res => {
+      console.log('****getStudent request student: ', res.data);
+      return res.data;
+    })
+    .then(student => {
+      console.log('Student received from route!', student);
+      dispatch(setStudent(student));
+    })
+    .catch(console.error);
+  };
+};
+
+// -- 1. delete student from database
+// -- 2. update redux store state
+
+export const removeStudent = (studentId) => {
+  return (dispatch) => {
+    axios.delete(`/api/students/${studentId}`)
+    .then(res => {
+      return res.data;
+    })
+    .then(student => {
+      dispatch(deleteStudent(student));
     })
     .catch(console.error);
   };
