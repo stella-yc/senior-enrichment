@@ -5,20 +5,26 @@ import { Provider } from 'react-redux';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router'
 
 import store from './store';
-import Root from './components/Root';
 import AllCampuses from './components/AllCampuses';
 import AllStudents from './components/AllStudents';
 import App from './components/App';
 import Campus from './components/Campus';
 import Student from './components/Student';
-import { getCampuses, getStudents, getStudent } from './action-creators';
+import { getCampuses, getStudents, getStudent, getCampusStudents, getCampus } from './action-creators';
 import NewCampus from './components/NewCampus';
 import NewStudent from './components/NewStudent';
 
+//** onEnter Functions **//
 const onCampusesEnter = () => store.dispatch(getCampuses());
 const onStudentsEnter = () => store.dispatch(getStudents());
-const onStudentEnter = (newRouterState) => store.dispatch(getStudent(newRouterState.params.studentId));
+const onStudentEnter = (newRouterState) =>
+  store.dispatch(getStudent(newRouterState.params.studentId));
+const onCampusEnter = (newRouterState) => {
+  store.dispatch(getCampusStudents(newRouterState.params.campusId));
+  store.dispatch(getCampus(newRouterState.params.campusId));
+};
 
+//** Frontend routing **//
 render (
   <Provider store={store}>
     <Router history={hashHistory}>
@@ -28,7 +34,10 @@ render (
           component={AllStudents}
           onEnter={onStudentsEnter}
         />
-        <Route path="campus/:campusName" component={Campus} />
+        <Route path="campus/:campusId"
+          component={Campus}
+          onEnter={onCampusEnter}
+        />
         <Route path="student/:studentId"
           component={Student}
           onEnter={onStudentEnter}
@@ -41,14 +50,3 @@ render (
   </Provider>,
   document.getElementById('main')
 )
-
-
-
-// render (
-//   <Provider store={store}>
-//     <Router history={hashHistory}>
-//       <Route path="/" component={AllCampuses} />
-//     </Router>
-//   </Provider>,
-//   document.getElementById('main')
-// )

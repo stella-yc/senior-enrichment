@@ -4,7 +4,9 @@ import { ALL_CAMPUSES,
         ADD_CAMPUS,
         ADD_STUDENT,
         SELECT_STUDENT,
-        DELETE_STUDENT
+        DELETE_STUDENT,
+        SELECT_CAMPUS_STUDENTS,
+        SELECT_CAMPUS
       } from '../action-creators';
 
 // This is a rough outline of the structure of the store and
@@ -36,9 +38,10 @@ const students = [
 const initialState = {
   allCampuses: [],
   allStudents: [],
-  selectedCampus: singleCampus,
-  selectedStudent: {}
-}
+  selectedCampus: {},
+  selectedStudent: {},
+  selectedCampusStudents: []
+};
 
 
 // Root Reducer!
@@ -62,10 +65,9 @@ const rootReducer = function(state = initialState, action) {
       newState.allStudents.push(newStudent);
       break;
     }
-    case SELECT_STUDENT: {
+    case SELECT_STUDENT:
       newState.selectedStudent = action.selectedStudent;
       break;
-    }
     case DELETE_STUDENT: {
       let oldStudents = newState.allStudents;
       newState.allStudents = oldStudents.filter(student =>
@@ -73,6 +75,12 @@ const rootReducer = function(state = initialState, action) {
       );
       break;
     }
+    case SELECT_CAMPUS_STUDENTS:
+      newState.selectedCampusStudents = action.selectedCampus;
+      break;
+    case SELECT_CAMPUS:
+      newState.selectedCampus = action.selectedCampus;
+      break;
     default: return state;
   }
   return newState;

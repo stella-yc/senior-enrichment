@@ -103,4 +103,17 @@ api.delete('/students/:studentId', (req, res, next) => {
 	.catch(next);
 });
 
+//Get all students from a campus
+api.get('/campuses/:campusId/students', (req, res, next) => {
+	User.findAll({
+		where: {
+			HomeCampusId: req.params.campusId
+		}
+	})
+	.then(students => {
+		res.send(students);
+	})
+	.catch(next);
+});
+
 module.exports = api;

@@ -5,12 +5,13 @@ import { Link } from 'react-router';
 
 /** CampusIcon Presentational Component***/
 const CampusIcon = (props) => {
+  let id = props.id;
   let name = props.name;
   let imageURL = props.imageURL;
   return (
     <div>
       <h3>{name}</h3>
-      <Link to={`/campus/${name}`}><img src={imageURL}/></Link>
+      <Link to={`/campus/${id}`}><img src={imageURL}/></Link>
     </div>
   );
 };
@@ -27,6 +28,7 @@ const AllCampuses = (props) => {
             <CampusIcon
               key={campus.name}
               name={campus.name}
+              id={campus.id}
               imageURL={campus.imageURL}
             />
           );

@@ -8,7 +8,8 @@ export const ADD_CAMPUS = 'ADD_CAMPUS';
 export const ADD_STUDENT = 'ADD_STUDENT';
 export const SELECT_STUDENT = 'SELECT_STUDENT';
 export const DELETE_STUDENT = 'DELETE_STUDENT';
-
+export const SELECT_CAMPUS_STUDENTS = 'SELECT_CAMPUS_STUDENTS';
+export const SELECT_CAMPUS = 'SELECT_CAMPUS';
 //** action creators **//
 
 const loadCampuses = (campuses) => {
@@ -52,6 +53,20 @@ const deleteStudent = (student) => {
     deletedStudent: student
   };
 };
+
+const setCampusStudents = (campus) => {
+  return {
+    type: SELECT_CAMPUS_STUDENTS,
+    selectedCampus: campus
+  };
+};
+
+const setCampus = (campus) => {
+  return {
+    type: SELECT_CAMPUS,
+    selectedCampus: campus
+  }
+}
 
 // ** ASYNC ACTION CREATORS ** //
 
@@ -144,6 +159,38 @@ export const removeStudent = (studentId) => {
     })
     .then(student => {
       dispatch(deleteStudent(student));
+    })
+    .catch(console.error);
+  };
+};
+
+// -- 1. retrieve all students in a campus from database
+// -- 2. update redux store state
+
+export const getCampusStudents = (campusId) => {
+  return (dispatch) => {
+    axios.get(`/api/campuses/${campusId}/students`)
+    .then(res => {
+      return res.data;
+    })
+    .then(student => {
+      dispatch(setCampusStudents(student));
+    })
+    .catch(console.error);
+  };
+};
+
+// -- 1. retrieve a campus from database
+// -- 2. update redux store
+
+export const getCampus = (campusId) => {
+  return (dispatch) => {
+    axios.get(`/api/campuses/${campusId}`)
+    .then(res => {
+      return res.data;
+    })
+    .then(campus => {
+      dispatch(setCampus(campus));
     })
     .catch(console.error);
   };
