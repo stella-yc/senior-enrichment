@@ -77,6 +77,19 @@ api.delete('/students/:studentId', (req, res, next) => {
 	.catch(next);
 });
 
+//Delete a campus
+api.delete('/campuses/:campusId', (req, res, next) => {
+	Campus.findOne({
+		where: { id: req.params.campusId }
+	})
+	.then(campus => {
+		campus.destroy();
+		res.send(campus);
+	})
+	.catch(next);
+});
+
+
 //Get all students from a campus
 api.get('/campuses/:campusId/students', (req, res, next) => {
 	User.findAll({

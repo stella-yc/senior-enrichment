@@ -8,6 +8,7 @@ export const ADD_CAMPUS = 'ADD_CAMPUS';
 export const ADD_STUDENT = 'ADD_STUDENT';
 export const SELECT_STUDENT = 'SELECT_STUDENT';
 export const DELETE_STUDENT = 'DELETE_STUDENT';
+export const DELETE_CAMPUS = 'DELETE_CAMPUS';
 export const SELECT_CAMPUS_STUDENTS = 'SELECT_CAMPUS_STUDENTS';
 export const SELECT_CAMPUS = 'SELECT_CAMPUS';
 
@@ -52,6 +53,13 @@ const deleteStudent = (student) => {
   return {
     type: DELETE_STUDENT,
     deletedStudent: student
+  };
+};
+
+const deleteCampus = (campus) => {
+  return {
+    type: DELETE_CAMPUS,
+    deletedCampus: campus
   };
 };
 
@@ -137,7 +145,7 @@ export const addStudent = (newStudent) => {
 
 export const getStudent = (studentId) => {
   return (dispatch) => {
-    axios.get(`/api/students/${studentId}`)
+    return axios.get(`/api/students/${studentId}`)
     .then(res => res.data)
     .then(student => {
       dispatch(setStudent(student));
@@ -155,6 +163,20 @@ export const removeStudent = (studentId) => {
     .then(res => res.data)
     .then(student => {
       dispatch(deleteStudent(student));
+    })
+    .catch(console.error);
+  };
+};
+
+// -- 1. delete campus from database
+// -- 2. update redux store state
+
+export const removeCampus = (campusId) => {
+  return (dispatch) => {
+    axios.delete(`/api/campuses/${campusId}`)
+    .then(res => res.data)
+    .then(campus => {
+      dispatch(deleteCampus(campus));
     })
     .catch(console.error);
   };

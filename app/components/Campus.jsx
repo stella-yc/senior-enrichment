@@ -1,38 +1,58 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { removeCampus } from '../action-creators';
 
 const Campus = (props) => {
+
   let students = props.selectedCampusStudents;
+  let campus = props.selectedCampus;
+
+  const handleDelete = (event) => {
+    props.deleteCampus(campus.id);
+    console.log('handler works!');
+    event.preventDefault();
+  };
+
   return (
     <div className="container">
 
-      <ul>
-        <h1 className="cool-font">{props.selectedCampus.name}</h1>
-        <h4>Student Id and Name</h4>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-            <tbody>
-          {
-            students.map(student => {
-              return (
-                <tr key={student.id}>
-                  <td>{student.id}</td>
-                  <td><Link to={`/student/${student.id}`}>
-                    {student.name}
-                  </Link></td>
-                </tr>
-              );
-            })
-          }
-          </tbody>
-        </table>
-      </ul>
+      <h1 className="cool-font">{campus.name}</h1>
+        <div className="planet">
+          <img src={campus.imageURL} className="img-responsive" />
+        </div>
+
+      <h4>Enrolled Students</h4>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        </thead>
+          <tbody>
+        {
+          students.map(student => {
+            return (
+              <tr key={student.id}>
+                <td>{student.id}</td>
+                <td><Link to={`/student/${student.id}`}>
+                  {student.name}
+                </Link></td>
+              </tr>
+            );
+          })
+        }
+        </tbody>
+      </table>
+
+      <button
+        className="btn btn-danger"
+        onClick={handleDelete}
+      >
+        Delete Campus
+      </button>
+
     </div>
   );
 };
@@ -43,8 +63,12 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteCampus (campusId) {
+      dispatch(removeCampus(campusId));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Campus);

@@ -4,6 +4,7 @@ import { ALL_CAMPUSES,
         ADD_STUDENT,
         SELECT_STUDENT,
         DELETE_STUDENT,
+        DELETE_CAMPUS,
         SELECT_CAMPUS_STUDENTS,
         SELECT_CAMPUS
       } from '../action-creators';
@@ -21,15 +22,19 @@ const initialState = {
 const rootReducer = function(state = initialState, action) {
   const newState = Object.assign({}, state);
   switch (action.type) {
+
     case ALL_CAMPUSES:
       newState.allCampuses = action.allCampuses;
       break;
+
     case ALL_STUDENTS:
       newState.allStudents = action.allStudents;
       break;
+
     case ADD_CAMPUS:
       newState.allCampuses.push(action.newCampus);
       break;
+
     case ADD_STUDENT: {
       let newStudent = action.newStudent;
       let homeCampus = newState.allCampuses.filter(campus =>
@@ -38,9 +43,11 @@ const rootReducer = function(state = initialState, action) {
       newState.allStudents.push(newStudent);
       break;
     }
+
     case SELECT_STUDENT:
       newState.selectedStudent = action.selectedStudent;
       break;
+
     case DELETE_STUDENT: {
       let oldStudents = newState.allStudents;
       newState.allStudents = oldStudents.filter(student =>
@@ -48,15 +55,28 @@ const rootReducer = function(state = initialState, action) {
       );
       break;
     }
+
+    case DELETE_CAMPUS: {
+      let oldCampuses = newState.allCampuses;
+      newState.allCampuses = oldCampuses.filter(campus =>
+        campus.id !== action.deletedCampus.id
+      );
+      break;
+    }
+
     case SELECT_CAMPUS_STUDENTS:
       newState.selectedCampusStudents = action.selectedCampus;
       break;
+
     case SELECT_CAMPUS:
       newState.selectedCampus = action.selectedCampus;
       break;
+
     default: return state;
   }
+
   return newState;
+
 };
 
 export default rootReducer;
