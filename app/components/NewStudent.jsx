@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addStudent } from '../action-creators';
+import { browserHistory } from 'react-router';
+
+// ** Stateful Container for NewStudentForm ** //
 
 class NewStudentForm extends Component {
   constructor(props) {
@@ -31,7 +34,6 @@ class NewStudentForm extends Component {
   }
 
   handleSubmit (event) {
-    console.log('state to send', this.state);
     this.props.sendNewStudent(this.state);
     this.setState({
       name: '',
@@ -40,35 +42,38 @@ class NewStudentForm extends Component {
     });
     event.preventDefault();
   }
+
   render() {
     return (
-      <div>
-      <h1>Learn JavaScript in space!</h1>
+      <div className="container">
+      <h3 className="cool-font">Learn JavaScript in space!</h3>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>
-              Name:
+          <div className="form-group">
+            <label>Name:</label>
               <input
                 type="text"
                 name="name"
+                className="form-control"
                 value={this.state.name}
                 onChange={this.handleChangeName}
               />
-            </label>
           </div>
-          <div>
-            <label>
-              Email:
+          <div className="form-group">
+            <label>Email:</label>
               <input
                 type="text"
                 name="imageURL"
+                className="form-control"
                 value={this.state.email}
                 onChange={this.handleChangeEmail}
               />
-            </label>
+
           </div>
-          <select value={this.props.campus} onChange=
-          {this.handleChangeCampus}>
+          <select
+            value={this.props.campus}
+            onChange={this.handleChangeCampus}
+            className="form-control"
+          >
             <option>Select an campus!</option>
             {this.props.allCampuses.map(campus => {
               return (
@@ -82,6 +87,7 @@ class NewStudentForm extends Component {
             })}
           </select>
           <button
+            className="btn btn-primary button-padding"
             type="submit">
             Go to space!
           </button>
@@ -97,7 +103,8 @@ class NewStudentForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendNewStudent (newStudent) {
-      dispatch(addStudent(newStudent));
+      dispatch(addStudent(newStudent))
+      .then(() => browserHistory.push(`/students`));
     }
   };
 };

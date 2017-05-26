@@ -10,6 +10,7 @@ export const SELECT_STUDENT = 'SELECT_STUDENT';
 export const DELETE_STUDENT = 'DELETE_STUDENT';
 export const SELECT_CAMPUS_STUDENTS = 'SELECT_CAMPUS_STUDENTS';
 export const SELECT_CAMPUS = 'SELECT_CAMPUS';
+
 //** action creators **//
 
 const loadCampuses = (campuses) => {
@@ -65,8 +66,8 @@ const setCampus = (campus) => {
   return {
     type: SELECT_CAMPUS,
     selectedCampus: campus
-  }
-}
+  };
+};
 
 // ** ASYNC ACTION CREATORS ** //
 
@@ -86,13 +87,14 @@ export const getCampuses = () => {
 };
 
 
-// to retrieve all students
+// -- 1. Axios request to retrieve all students
+// -- 2. Update redux store state
 export const getStudents = () => {
   return (dispatch) => {
     axios.get('/api/students')
     .then(res => res.data)
     .then(students => {
-      dispatch(loadStudents(students))
+      dispatch(loadStudents(students));
     })
     .catch(console.error);
   };
@@ -136,12 +138,8 @@ export const addStudent = (newStudent) => {
 export const getStudent = (studentId) => {
   return (dispatch) => {
     axios.get(`/api/students/${studentId}`)
-    .then(res => {
-      console.log('****getStudent request student: ', res.data);
-      return res.data;
-    })
+    .then(res => res.data)
     .then(student => {
-      console.log('Student received from route!', student);
       dispatch(setStudent(student));
     })
     .catch(console.error);
@@ -154,9 +152,7 @@ export const getStudent = (studentId) => {
 export const removeStudent = (studentId) => {
   return (dispatch) => {
     axios.delete(`/api/students/${studentId}`)
-    .then(res => {
-      return res.data;
-    })
+    .then(res => res.data)
     .then(student => {
       dispatch(deleteStudent(student));
     })
@@ -170,9 +166,7 @@ export const removeStudent = (studentId) => {
 export const getCampusStudents = (campusId) => {
   return (dispatch) => {
     axios.get(`/api/campuses/${campusId}/students`)
-    .then(res => {
-      return res.data;
-    })
+    .then(res => res.data)
     .then(student => {
       dispatch(setCampusStudents(student));
     })
@@ -186,9 +180,7 @@ export const getCampusStudents = (campusId) => {
 export const getCampus = (campusId) => {
   return (dispatch) => {
     axios.get(`/api/campuses/${campusId}`)
-    .then(res => {
-      return res.data;
-    })
+    .then(res => res.data)
     .then(campus => {
       dispatch(setCampus(campus));
     })

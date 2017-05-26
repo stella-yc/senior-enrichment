@@ -1,8 +1,8 @@
 'use strict';
 import React from 'react';
-import {render} from 'react-dom';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import {Router, Route, hashHistory, IndexRoute} from 'react-router'
+import { Router, Route, hashHistory, browserHistory, IndexRoute } from 'react-router';
 
 import store from './store';
 import AllCampuses from './components/AllCampuses';
@@ -15,19 +15,24 @@ import NewCampus from './components/NewCampus';
 import NewStudent from './components/NewStudent';
 
 //** onEnter Functions **//
+
 const onCampusesEnter = () => store.dispatch(getCampuses());
+
 const onStudentsEnter = () => store.dispatch(getStudents());
+
 const onStudentEnter = (newRouterState) =>
   store.dispatch(getStudent(newRouterState.params.studentId));
+
 const onCampusEnter = (newRouterState) => {
   store.dispatch(getCampusStudents(newRouterState.params.campusId));
   store.dispatch(getCampus(newRouterState.params.campusId));
 };
 
 //** Frontend routing **//
+
 render (
   <Provider store={store}>
-    <Router history={hashHistory}>
+    <Router history={browserHistory}>
       <Route path="/" component={App} onEnter={onCampusesEnter}>
         <Route path="campuses" component={AllCampuses} />
         <Route path="students"

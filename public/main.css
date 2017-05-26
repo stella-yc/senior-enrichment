@@ -1,0 +1,35 @@
+.planet {
+  padding: 10px;
+  height: 300px;
+  overflow: hidden;
+}
+
+.planet img {
+  max-width:100%;
+  max-height:100%;
+}
+
+nav {
+  margin-bottom: 15px;
+}
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.cool-font, .navbar-brand {
+  font-family: 'Kumar One', cursive;
+}
+
+#title {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.more-padding {
+  margin: 20px;
+}
+
+.button-padding {
+  margin-top: 30px;
+}

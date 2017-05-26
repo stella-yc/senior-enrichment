@@ -1,28 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
+/** Student Presentational Component **/
 const Student = (props) => {
   const student = props.selectedStudent;
-  console.log('*****student', student);
-  console.log('******HomeCampus', student.HomeCampus);
   return (
-    <div>
-      <h2>{`Student Name: ${student.name}`}</h2>
-      <p>{`Student Email: ${student.email}`}</p>
-      <p>{`Student HomeCampusId: ${student.HomeCampusId}`}</p>
+    <div className="container">
+      <h2 className="cool-font">Student Profile</h2>
+      <p>{`Name: ${student.name}`}</p>
+      <p>{`Email: ${student.email}`}</p>
+      <p>{`Home Campus Id:  ${student.HomeCampusId}`}</p>
     </div>
   );
 };
 
-// export default Student;
-
-/*** AllStudents Container React-Redux */
+/*** Student Container React-Redux */
 const mapStateToProps = (state) => {
   return state;
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
   return {};
 };
 

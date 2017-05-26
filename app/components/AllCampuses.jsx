@@ -9,32 +9,47 @@ const CampusIcon = (props) => {
   let name = props.name;
   let imageURL = props.imageURL;
   return (
-    <div>
-      <h3>{name}</h3>
-      <Link to={`/campus/${id}`}><img src={imageURL}/></Link>
-    </div>
+      <div className="col-xs-6">
+        <h5 className="text-center cool-font">{name}</h5>
+          <div className="planet">
+            <Link to={`/campus/${id}`}>
+              <img src={imageURL} className="img-responsive" />
+            </Link>
+          </div>
+      </div>
   );
 };
 
 /** AllCampuses Dumb Component Version **/
 const AllCampuses = (props) => {
-  console.log('AllCampuses Props', props);
+
   return (
-    <div>
-      <h1>Margaret Hamilton Interplanetary Academy of JavaScript</h1>
-      {
-        props.allCampuses.map(campus => {
-          return (
-            <CampusIcon
-              key={campus.name}
-              name={campus.name}
-              id={campus.id}
-              imageURL={campus.imageURL}
-            />
-          );
-        })
-      }
-      <Link to="/newCampus"><h2>Add a new campus!</h2></Link>
+    <div className="container" >
+      <h4 id="title" className="cool-font">
+      <i className="fa fa-star-o" aria-hidden="true"></i>
+      Margaret Hamilton Interplanetary Academy of JavaScript
+      <i className="fa fa-star-o" aria-hidden="true"></i>
+      </h4>
+
+      <div className="container-fluid">
+        <div className="row">
+        {
+          props.allCampuses.map(campus => {
+            return (
+              <CampusIcon
+                key={campus.name}
+                name={campus.name}
+                id={campus.id}
+                imageURL={campus.imageURL}
+              />
+            );
+          })
+        }
+        </div>
+      </div>
+      <Link to="/newCampus"><h4 className="more-padding">
+      <i className="fa fa-hand-o-right" aria-hidden="true"></i>
+      Join our space campuses!</h4></Link>
     </div>
   );
 };
@@ -43,11 +58,11 @@ const AllCampuses = (props) => {
 /*** AllCampuses Container React-Redux */
 const mapStateToProps = (state) => {
   return state;
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {};
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllCampuses);
 
@@ -91,12 +106,3 @@ export default connect(mapStateToProps, mapDispatchToProps)(AllCampuses);
 //   }
 
 // }
-
-
-/** Dummy Campus Data */
-// const campuses = [
-//   { name: 'Mars', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Mars_Hubble.jpg' },
-//   { name: 'Luna', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Moon_apollo12.jpg' },
-//   { name: 'Terra', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif' },
-//   { name: 'Titan', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Titan_multi_spectral_overlay.jpg' }
-// ];

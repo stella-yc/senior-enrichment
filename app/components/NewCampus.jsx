@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addCampus } from '../action-creators';
-
+import { browserHistory } from 'react-router';
 
 // Form component with local state //
 
@@ -36,32 +36,35 @@ class NewCampusForm extends Component {
 
   render () {
     return (
-      <div>
-        <h1>Join our space school!</h1>
+      <div className="container">
+        <h3 className="cool-font">Join our space school!</h3>
         <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>
-              Space Campus Name:
+          <div className="form-group">
+            <label>Space Campus Name:</label>
+
               <input
                 type="text"
                 name="name"
                 value={this.state.campusName}
                 onChange={this.handleChangeName}
+                className="form-control"
               />
-            </label>
+
           </div>
-          <div>
-            <label>
-              Space Campus Photo Image URL:
+          <div className="form-group">
+            <label>Space Campus Photo Image URL:</label>
+
               <input
                 type="text"
                 name="imageURL"
                 value={this.state.campusPhoto}
                 onChange={this.handleChangePhoto}
+                className="form-control"
               />
-            </label>
+
           </div>
           <button
+            className="btn btn-primary"
             type="submit">
             Join space school!!!
           </button>
@@ -77,7 +80,8 @@ class NewCampusForm extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     sendNewCampus (newCampus) {
-      dispatch(addCampus(newCampus));
+      dispatch(addCampus(newCampus))
+      .then(() => browserHistory.push('/campuses'));
     }
   };
 };
