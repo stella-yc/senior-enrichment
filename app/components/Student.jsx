@@ -17,14 +17,30 @@ const Student = (props) => {
   return (
     <div className="container">
       <h2 className="cool-font">Student Profile</h2>
-      <p>{`Id: ${student.id}`}</p>
-      <p>{`Name: ${student.name}`}</p>
-      <p>{`Email: ${student.email}`}</p>
-      <p>Home Campus:
-        <Link to={`/campus/${campus ? campus.id : '' }`}>
-          {` ${ campus ? campus.name : '' }`}
-        </Link>
-      </p>
+      <table className="table">
+        <tbody>
+          <tr>
+            <td>Id</td>
+            <td>{student.id}</td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>{student.name}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{student.email}</td>
+          </tr>
+          <tr>
+            <td>Home Campus</td>
+            <td>
+              <Link to={`/campus/${campus ? campus.id : '' }`}>
+                {` ${ campus ? campus.name : '' }`}
+              </Link>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <button
         className="btn btn-danger"
         onClick={handleDelete}
