@@ -28,13 +28,18 @@ const StudentRow = (props) => {
 
 
 const AllStudents = (props) => {
+
   return (
+
     <div className="container">
+
       <h3 className="cool-font">Space Academy Student Directory</h3>
+
       <Link to="/newStudent"><p className="more-padding">
         <i className="fa fa-graduation-cap" aria-hidden="true">
         </i>  Become a Space Cadet!
       </p></Link>
+
       <table className="table table-striped">
         <thead>
           <tr>

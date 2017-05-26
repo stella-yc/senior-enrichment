@@ -53,6 +53,7 @@ const Student = (props) => {
 };
 
 /*** Student Container React-Redux */
+
 const mapStateToProps = (state) => {
   return state;
 };

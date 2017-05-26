@@ -14,7 +14,6 @@ import Student from './components/Student';
 import { getCampuses, getStudents, getStudent, getCampusStudents, getCampus } from './action-creators';
 import NewCampus from './components/NewCampus';
 import NewStudent from './components/NewStudent';
-import UpdateStudent from './components/UpdateStudent';
 
 //** onEnter Functions **//
 

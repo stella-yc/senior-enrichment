@@ -8,9 +8,9 @@ const App = (props) => {
 
       <nav className="navbar navbar-toggleable-md navbar-light bg-faded">
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon" />
         </button>
-        <a className="navbar-brand" href="#">MH<i className="fa fa-space-shuttle" aria-hidden="true"></i></a>
+        <Link className="navbar-brand" to="/campuses">MH<i className="fa fa-space-shuttle" aria-hidden="true"></i></Link>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
@@ -30,20 +30,5 @@ const App = (props) => {
     </div>
   );
 };
-
-
-// const App = (props) => {
-//   return (
-//     <div>
-
-//       <h2>Margaret Hamilton Interplanetary Academy of JavaScript</h2>
-//       <span><Link to="/">Home</Link></span>
-//       <span> == </span>
-//       <span><Link to="/students">Students</Link></span>
-
-//       {props.children}
-//     </div>
-//   );
-// };
 
 export default App;
