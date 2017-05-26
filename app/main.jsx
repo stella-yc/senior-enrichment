@@ -1,8 +1,9 @@
 'use strict';
+
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Route, hashHistory, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
 
 import store from './store';
 import AllCampuses from './components/AllCampuses';
@@ -13,6 +14,7 @@ import Student from './components/Student';
 import { getCampuses, getStudents, getStudent, getCampusStudents, getCampus } from './action-creators';
 import NewCampus from './components/NewCampus';
 import NewStudent from './components/NewStudent';
+import UpdateStudent from './components/UpdateStudent';
 
 //** onEnter Functions **//
 

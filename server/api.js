@@ -99,4 +99,22 @@ api.get('/campuses/:campusId/students', (req, res, next) => {
 	.catch(next);
 });
 
+
+//Update a student profile
+api.put('/students/:studentId', (req, res, next) => {
+	console.log(req.body);
+	User.findOne({
+		where: { id: req.params.studentId }
+	})
+	.then(student => {
+		student.update({
+			name: req.body.name,
+			email: req.body.email,
+			HomeCampusId: req.body.HomeCampusId
+		})
+		.then(updatedStud => res.send(updatedStud));
+	})
+	.catch(next);
+});
+
 module.exports = api;

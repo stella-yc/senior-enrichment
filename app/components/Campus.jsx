@@ -10,7 +10,6 @@ const Campus = (props) => {
 
   const handleDelete = (event) => {
     props.deleteCampus(campus.id);
-    console.log('handler works!');
     event.preventDefault();
   };
 

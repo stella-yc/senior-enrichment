@@ -6,7 +6,8 @@ import { ALL_CAMPUSES,
         DELETE_STUDENT,
         DELETE_CAMPUS,
         SELECT_CAMPUS_STUDENTS,
-        SELECT_CAMPUS
+        SELECT_CAMPUS,
+        UPDATE_STUDENT
       } from '../action-creators';
 
 // Initial State
@@ -48,6 +49,14 @@ const rootReducer = function(state = initialState, action) {
       newState.selectedStudent = action.selectedStudent;
       break;
 
+    case SELECT_CAMPUS:
+      newState.selectedCampus = action.selectedCampus;
+      break;
+
+    case SELECT_CAMPUS_STUDENTS:
+      newState.selectedCampusStudents = action.selectedCampus;
+      break;
+
     case DELETE_STUDENT: {
       let oldStudents = newState.allStudents;
       newState.allStudents = oldStudents.filter(student =>
@@ -64,13 +73,16 @@ const rootReducer = function(state = initialState, action) {
       break;
     }
 
-    case SELECT_CAMPUS_STUDENTS:
-      newState.selectedCampusStudents = action.selectedCampus;
+    case UPDATE_STUDENT: {
+      let oldStudents = newState.allStudents;
+      for (var i = 0; i < oldStudents.length; i++) {
+        if (action.updatedStudent.id === oldStudents[i].id) {
+          oldStudents[i] = action.updatedStudent;
+        }
+      }
+      newState.allStudents = oldStudents;
       break;
-
-    case SELECT_CAMPUS:
-      newState.selectedCampus = action.selectedCampus;
-      break;
+    }
 
     default: return state;
   }
@@ -82,6 +94,7 @@ const rootReducer = function(state = initialState, action) {
 export default rootReducer;
 
 /****** DUMMY DATA ******/
+
 // const campuses = [
 //   { name: 'Mars', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Mars_Hubble.jpg' },
 //   { name: 'Luna', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Moon_apollo12.jpg' },

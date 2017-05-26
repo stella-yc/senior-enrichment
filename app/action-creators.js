@@ -11,6 +11,7 @@ export const DELETE_STUDENT = 'DELETE_STUDENT';
 export const DELETE_CAMPUS = 'DELETE_CAMPUS';
 export const SELECT_CAMPUS_STUDENTS = 'SELECT_CAMPUS_STUDENTS';
 export const SELECT_CAMPUS = 'SELECT_CAMPUS';
+export const UPDATE_STUDENT = 'UPDATE_STUDENT';
 
 //** action creators **//
 
@@ -74,6 +75,13 @@ const setCampus = (campus) => {
   return {
     type: SELECT_CAMPUS,
     selectedCampus: campus
+  };
+};
+
+const updateStudent = (student) => {
+  return {
+    type: UPDATE_STUDENT,
+    updatedStudent: student
   };
 };
 
@@ -159,7 +167,7 @@ export const getStudent = (studentId) => {
 
 export const removeStudent = (studentId) => {
   return (dispatch) => {
-    axios.delete(`/api/students/${studentId}`)
+    return axios.delete(`/api/students/${studentId}`)
     .then(res => res.data)
     .then(student => {
       dispatch(deleteStudent(student));
@@ -205,6 +213,20 @@ export const getCampus = (campusId) => {
     .then(res => res.data)
     .then(campus => {
       dispatch(setCampus(campus));
+    })
+    .catch(console.error);
+  };
+};
+
+// -- 1. Update student info in database
+// -- 2. update redux store
+
+export const sendUpdatedStud = (student) => {
+  return (dispatch) => {
+    axios.put(`/api/students/${student.id}`)
+    .then(res => res.data)
+    .then(updatedStudent => {
+      dispatch(updateStudent(updatedStudent));
     })
     .catch(console.error);
   };

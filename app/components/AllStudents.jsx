@@ -16,9 +16,10 @@ const StudentRow = (props) => {
       <td>{props.id}</td>
       <td><Link to={`/student/${props.id}`}>{props.name}</Link></td>
       <td>{props.campus}</td>
-      <td><button
-        className="btn btn-danger"
-        onClick={handleDelete}>X
+      <td>
+        <button
+          className="btn btn-danger"
+          onClick={handleDelete}>X
         </button>
       </td>
     </tr>

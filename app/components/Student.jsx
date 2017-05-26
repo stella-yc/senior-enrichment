@@ -1,12 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
+import { removeStudent } from '../action-creators';
 
 /** Student Presentational Component **/
 const Student = (props) => {
 
   let student = props.selectedStudent;
   let campus = student.HomeCampus;
+
+  const handleDelete = (event) => {
+    props.deleteStudent(student.id);
+    event.preventDefault();
+  };
 
   return (
     <div className="container">
@@ -19,6 +25,12 @@ const Student = (props) => {
           {` ${ campus ? campus.name : '' }`}
         </Link>
       </p>
+      <button
+        className="btn btn-danger"
+        onClick={handleDelete}
+      >
+        Delete Student
+      </button>
     </div>
   );
 
@@ -29,8 +41,13 @@ const mapStateToProps = (state) => {
   return state;
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteStudent (studentId) {
+      dispatch(removeStudent(studentId))
+      .then(() => browserHistory.push(`/students`));
+    }
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Student);
