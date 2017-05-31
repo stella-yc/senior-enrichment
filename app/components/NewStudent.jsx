@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addStudent } from '../action-creators';
+import { addStudent } from '../reducers/students';
 import { browserHistory } from 'react-router';
-
+import CampusMenu from './CampusMenu';
 // ** Stateful Container for NewStudentForm ** //
 
 class NewStudentForm extends Component {
@@ -69,23 +69,12 @@ class NewStudentForm extends Component {
               />
 
           </div>
-          <select
-            value={this.props.campus}
-            onChange={this.handleChangeCampus}
-            className="form-control"
-          >
-            <option>Select an campus!</option>
-            {this.props.allCampuses.map(campus => {
-              return (
 
-                <option
-                  value={`${campus.id}`}
-                  key={`${campus.id}`}
-                > {`${campus.name}`}
-                </option>
-              );
-            })}
-          </select>
+          <CampusMenu
+            handleCampus={this.handleChangeCampus}
+            campuses={this.props.campuses}
+          />
+
           <button
             className="btn btn-primary button-padding"
             type="submit">

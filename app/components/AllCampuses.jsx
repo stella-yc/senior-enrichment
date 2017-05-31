@@ -34,7 +34,7 @@ const AllCampuses = (props) => {
       <div className="container-fluid">
         <div className="row">
         {
-          props.allCampuses.map(campus => {
+          props.campuses.map(campus => {
             return (
               <CampusIcon
                 key={campus.name}

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { sendUpdatedStud } from '../action-creators';
+import { sendUpdatedStud } from '../reducers/students';
 import { browserHistory } from 'react-router';
+import ContentEditable from 'react-contenteditable';
 
 // ** Did not complete, so this is not hooked up to the site ** //
 // ** Stateful Container for UpdateStudent ** //

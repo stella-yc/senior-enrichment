@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addCampus } from '../action-creators';
+import { addCampus } from '../reducers/campuses';
 import { browserHistory } from 'react-router';
 
 // Form component with local state //

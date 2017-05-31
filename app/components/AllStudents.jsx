@@ -1,31 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { removeStudent } from '../action-creators';
-
-
-const StudentRow = (props) => {
-
-  const handleDelete = (event) => {
-    props.deleteStudent(props.id);
-    event.preventDefault();
-  };
-
-  return (
-    <tr>
-      <td>{props.id}</td>
-      <td><Link to={`/student/${props.id}`}>{props.name}</Link></td>
-      <td>{props.campus}</td>
-      <td>
-        <button
-          className="btn btn-danger"
-          onClick={handleDelete}>X
-        </button>
-      </td>
-    </tr>
-  );
-};
-
+import { removeStudent } from '../reducers/students';
+import StudentRow from './StudentRow';
 
 const AllStudents = (props) => {
 
@@ -52,13 +29,14 @@ const AllStudents = (props) => {
           <tbody>
 
           {
-            props.allStudents.map(student => {
+            props.students.map(student => {
               return (
                 <StudentRow
                   key={student.id}
                   id={student.id}
                   name={student.name}
                   campus={student.HomeCampus.name}
+                  campusId={student.HomeCampusId}
                   deleteStudent={props.deleteStudent}
                 />
               );

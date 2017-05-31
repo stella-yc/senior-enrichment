@@ -61,7 +61,13 @@ api.post('/students', (req, res, next) => {
 		email: req.body.email,
 		HomeCampusId: +req.body.HomeCampusId
 	})
-	.then(student => res.send(student))
+	.then(student => {
+		User.findOne({
+			where: { id: student.id },
+			include: [ {model: Campus, as: 'HomeCampus'} ]
+		})
+		.then(newStudent => res.send(newStudent));
+	})
 	.catch(next);
 });
 
@@ -102,18 +108,33 @@ api.get('/campuses/:campusId/students', (req, res, next) => {
 
 //Update a student profile
 api.put('/students/:studentId', (req, res, next) => {
-	console.log(req.body);
-	User.findOne({
-		where: { id: req.params.studentId }
-	})
+	console.log('*** req.body', req.body);
+
+	User.findById(req.params.studentId)
 	.then(student => {
 		student.update({
 			name: req.body.name,
 			email: req.body.email,
 			HomeCampusId: req.body.HomeCampusId
 		})
-		.then(updatedStud => res.send(updatedStud));
+		.then(() => {
+			User.findOne({
+				where: { id: req.params.studentId },
+				include: [ {model: Campus, as: 'HomeCampus'} ]
+			})
+			.then(allStudInfo => res.send(allStudInfo));
+		});
 	})
+	.catch(next);
+});
+
+api.put('/campuses/:campusId', (req, res, next) => {
+	console.log('****', req.body);
+	Campus.findById(req.params.campusId)
+	.then(campus => {
+		return campus.update(req.body);
+	})
+	.then(updatedCampus => res.send(updatedCampus))
 	.catch(next);
 });
 
